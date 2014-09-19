@@ -1,8 +1,10 @@
 source 'https://rubygems.org'
 
-group :development, :tests do
+group :development, :test do
   gem 'rspec-rails', '3.1.0'
 end
+
+gem 'mechanize', '~> 2.6.0' # need an older version as Rails depends on too old mime-types 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
