@@ -1,6 +1,7 @@
 require 'mechanize'
 
 SOUTHWARK_LIBRARY_URL = 'https://capitadiscovery.co.uk/southwark/login'
+SOUTHWARK_LOGINFORM_URL = 'https://capitadiscovery.co.uk/southwark/sessions' # for tests only
 
 def extract_card_info(books_page)
   doc = books_page.parser

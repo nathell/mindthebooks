@@ -1,17 +1,31 @@
 require_relative 'fetcher'
 require 'active_record'
 require 'sqlite3'
+require 'rails/all'
+require 'active_record/railtie'
 require_relative '../../app/models/user'
 require_relative '../../app/models/card'
 require_relative '../../app/models/card_info'
 require_relative '../../app/models/book'
 
-ActiveRecord::Base.establish_connection(
-  adapter:  'sqlite3',
-  database: 'db/development.sqlite3'
-)
+config = Rails::Application::Configuration.new ""
+
+# This program is not part of the Rails Mind the Books app proper;
+# rather, it runs as a separate process, typically invoked from cron.
+# However, it needs access to the MTB ActiveRecord models, and we want
+# to keep ourselves DRY. So we need to instantiate Rails config manually
+# (we can't just access Rails.application.config, since Rails.application
+# will be nil), which the hackery below does.
+
+# Note that respecting Rails.env enables us to test it properly. See
+# spec/fetcher/.
+
+puts "Setting up database: #{Rails.env.intern}" 
+ActiveRecord::Base.configurations = config.database_configuration
+ActiveRecord::Base.establish_connection 
 
 def synchronize_card_data(client, card)
+  puts "Synchronizing data for card: #{card.number}"
   new_card_info = extract_card_info(download_books_page(client, card.number))
   if card.card_info 
     card.card_info.cardholder = new_card_info[:cardholder]
@@ -35,11 +49,16 @@ def synchronize_card_data(client, card)
   end
 end
 
-client = Mechanize.new
-logger = Logger.new STDOUT
-for user in User.all
-  for card in user.cards
-    logger.debug "Synchronizing data for card: #{card.number}"
-    synchronize_card_data client, card
+def run
+  client = Mechanize.new
+  logger = Logger.new STDOUT
+  for user in User.all
+    for card in user.cards
+      synchronize_card_data client, card
+    end
   end
+end
+
+if __FILE__ == $0
+  run
 end
