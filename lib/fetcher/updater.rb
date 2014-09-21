@@ -40,7 +40,7 @@ def synchronize_card_data(client, card)
         card.card_info.books.create! book
       end
     end
-    card.card_info.books.where({library_id: to_delete}).delete_all
+    card.card_info.books.delete(card.card_info.books.where({library_id: to_delete}))
   else
     books = new_card_info.delete(:books)
     card.card_info = CardInfo.new(new_card_info)

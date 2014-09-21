@@ -62,7 +62,7 @@ describe "Updater" do
     pretend_to_obtain_books "books-list.html"
     pretend_to_obtain_books "books-list-2.html"
     pretend_to_obtain_books "books-list-3.html"
-    old_book_list = books
+    old_book_list = books.to_a
     pretend_to_obtain_books "books-list-4.html" # we return "Tired of London..."
     expect(books).to eq old_book_list[1..2]
   end
