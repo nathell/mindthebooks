@@ -66,4 +66,9 @@ describe "Updater" do
     pretend_to_obtain_books "books-list-4.html" # we return "Tired of London..."
     expect(books).to eq old_book_list[1..2]
   end
+
+  it "should not fail when there are no books" do
+    pretend_to_obtain_books "books-list-empty.html"
+    expect(books).to be_empty
+  end
 end
