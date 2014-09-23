@@ -8,8 +8,6 @@ require_relative '../../app/models/card'
 require_relative '../../app/models/card_info'
 require_relative '../../app/models/book'
 
-config = Rails::Application::Configuration.new ""
-
 # This program is not part of the Rails Mind the Books app proper;
 # rather, it runs as a separate process, typically invoked from cron.
 # However, it needs access to the MTB ActiveRecord models, and we want
@@ -20,12 +18,14 @@ config = Rails::Application::Configuration.new ""
 # Note that respecting Rails.env enables us to test it properly. See
 # spec/fetcher/.
 
-puts "Setting up database: #{Rails.env.intern}" 
+Rails.logger = Rails.logger or Logger.new STDERR
+Rails.logger.debug "Setting up database: #{Rails.env.intern}" 
+config = Rails::Application::Configuration.new ""
 ActiveRecord::Base.configurations = config.database_configuration
 ActiveRecord::Base.establish_connection 
 
 def synchronize_card_data(client, card)
-  puts "Synchronizing data for card: #{card.number}"
+  Rails.logger.info "Synchronizing data for card: #{card.number}"
   new_card_info = extract_card_info(download_books_page(client, card.number))
   if card.card_info 
     card.card_info.cardholder = new_card_info[:cardholder]
@@ -51,7 +51,6 @@ end
 
 def run
   client = Mechanize.new
-  logger = Logger.new STDOUT
   for user in User.all
     for card in user.cards
       synchronize_card_data client, card
