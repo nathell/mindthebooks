@@ -29,11 +29,13 @@ class InitialSchema < ActiveRecord::Migration
     create_table :books do |t|
       t.integer :card_info_id
       t.integer :library_id
+      t.integer :library_loan_id
       t.string :title
       t.string :author
       t.date :due_date
       t.string :fine
       t.integer :renew_count
+      t.date :last_renewed
 
       t.timestamps
     end

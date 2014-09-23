@@ -16,11 +16,13 @@ ActiveRecord::Schema.define(version: 20140917103523) do
   create_table "books", force: true do |t|
     t.integer  "card_info_id"
     t.integer  "library_id"
+    t.integer  "library_loan_id"
     t.string   "title"
     t.string   "author"
     t.date     "due_date"
     t.string   "fine"
     t.integer  "renew_count"
+    t.date     "last_renewed"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

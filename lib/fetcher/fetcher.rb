@@ -17,6 +17,7 @@ def extract_card_info(books_page)
     { author: tr.css("span.author").inner_text,
       title: tr.css("th a").inner_text.strip,
       library_id: tr.at_css("th a").attr("href").sub("items/", "").to_i,
+      library_loan_id: tr.attr("id").sub("row_", "").to_i,
       due_date: due_date,
       fine: tr.css(".accFines").inner_text.strip,
       renew_count: tr.css(".accRenews").inner_text.strip.to_i }

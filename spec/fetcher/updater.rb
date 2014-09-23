@@ -29,6 +29,7 @@ describe "Updater" do
     expect(books.length).to eq 1
     expect(books.first.attributes).to include ({
       "author" => "Jones, Tom",
+      "library_loan_id" => 23118534, 
       "title" => "Tired of London, tired of life : one thing a day to do in London",
       "due_date" => "2014-09-28".to_date
     })
@@ -40,6 +41,7 @@ describe "Updater" do
     expect(books.length).to eq 2
     expect(books.second.attributes).to include ({
       "author" => "Marchant, Ian",
+      "library_loan_id" => 23118535, 
       "title" => "Something of the night",
       "due_date" => "2014-10-05".to_date
     })
@@ -52,6 +54,7 @@ describe "Updater" do
     expect(books.length).to eq 3
     expect(books.third.attributes).to include ({
       "author" => "McCarthy, John, 1956-",
+      "library_loan_id" => 23118536, 
       "title" => "You can't hide the sun: a journey through Palestine",
       "due_date" => "2014-10-10".to_date
     })
