@@ -8,18 +8,18 @@ def mock_web(url, file)
 end
 
 def pretend_to_obtain_books(file) 
-  mock_web SOUTHWARK_LOGINFORM_URL, file
-  synchronize_card_data @client, @card
+  mock_web Fetcher::SOUTHWARK_LOGINFORM_URL, file
+  synchronize_card_data @fetcher, @card
 end
 
 describe "Updater" do
   let(:user) { FactoryGirl.create(:user) }
 
   before do
-    @client = Mechanize.new
+    @fetcher = Fetcher.new
     @card = user.cards.build(number: "01234567")
     FakeWeb.allow_net_connect = false
-    mock_web SOUTHWARK_LIBRARY_URL, "login.html"
+    mock_web Fetcher::SOUTHWARK_LIBRARY_URL, "login.html"
   end
 
   subject(:books) { @card.card_info.books }

@@ -1,8 +1,53 @@
 # -*- coding: utf-8 -*-
+
 require 'mechanize'
 
-SOUTHWARK_LIBRARY_URL = 'https://capitadiscovery.co.uk/southwark/login'
-SOUTHWARK_LOGINFORM_URL = 'https://capitadiscovery.co.uk/southwark/sessions' # for tests only
+class Fetcher
+  SOUTHWARK_LIBRARY_URL = 'https://capitadiscovery.co.uk/southwark/login'
+  SOUTHWARK_LOGINFORM_URL = 'https://capitadiscovery.co.uk/southwark/sessions'
+  SOUTHWARK_RENEW_URL = 'https://capitadiscovery.co.uk/southwark/account/loans'
+
+  def initialize
+    @state = :not_logged_in
+    @client = Mechanize.new
+    @page = nil
+    @card_number = nil
+  end
+
+  def login(card_number)
+    if @state != :not_logged_in and @card_number != card_number
+      logout
+    end
+    @page = @client.get SOUTHWARK_LIBRARY_URL
+    form = @page.form_with id: "borrowerServices"
+    form.field_with(name: "barcode").value = card_number
+    @page = @client.submit form
+    @state = :books_list
+    @card_number = card_number
+  end
+
+  def logout
+    if @state != :not_logged_in
+      logout_form = @page.form_with id: "logout"
+      @page = @client.submit logout_form
+      @state = :not_logged_in
+    end
+  end
+
+  def renew(loan_ids)
+    form = @page.form_with class: "renewForm renewall posRight posRel"
+    form.field_with(name: "loan_ids[]").value = loan_ids.join " "
+    @page = @client.submit form
+  end
+
+  def page
+    @page
+  end
+
+  def state
+    @state
+  end
+end
 
 def extract_card_info(books_page)
   doc = books_page.parser

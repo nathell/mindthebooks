@@ -24,10 +24,11 @@ config = Rails::Application::Configuration.new ""
 ActiveRecord::Base.configurations = config.database_configuration
 ActiveRecord::Base.establish_connection 
 
-def synchronize_card_data(client, card)
+def synchronize_card_data(fetcher, card)
   Rails.logger.info "Synchronizing data for card: #{card.number}"
-  new_card_info = extract_card_info(download_books_page(client, card.number))
-  if card.card_info 
+  fetcher.login card.number
+  new_card_info = extract_card_info(fetcher.page)
+  if card.card_info
     card.card_info.cardholder = new_card_info[:cardholder]
     card.card_info.charges = new_card_info[:charges]
     old_books = card.card_info.books.map { |x| x.library_id }
@@ -49,11 +50,14 @@ def synchronize_card_data(client, card)
   end
 end
 
+def renew_on_demand(client, card)
+end
+
 def run
-  client = Mechanize.new
+  fetcher = Fetcher.new
   for user in User.all
     for card in user.cards
-      synchronize_card_data client, card
+      synchronize_card_data fetcher, card
     end
   end
 end
