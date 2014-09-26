@@ -69,13 +69,3 @@ def extract_card_info(books_page)
   end
   {cardholder: name_info[1], charges: charges_info[1], books: books}
 end
-
-def download_books_page(client, card_number)
-  page = client.get SOUTHWARK_LIBRARY_URL
-  form = page.form_with id: "borrowerServices"
-  form.field_with(name: "barcode").value = card_number
-  books_page = client.submit form
-  logout_form = books_page.form_with id: "logout"
-  client.submit logout_form
-  books_page
-end
