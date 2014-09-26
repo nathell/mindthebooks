@@ -24,6 +24,8 @@ gem 'therubyracer',  platforms: :ruby
 gem 'factory_girl_rails', '4.4.1', group: :test
 # For testing library interactions with MEchanize
 gem 'fakeweb', '~> 1.3', group: :test
+# For travelling back in time
+gem 'delorean', '2.1.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks

@@ -35,7 +35,7 @@ class InitialSchema < ActiveRecord::Migration
       t.date :due_date
       t.string :fine
       t.integer :renew_count
-      t.date :last_renewed
+      t.datetime :last_renewed
 
       t.timestamps
     end
