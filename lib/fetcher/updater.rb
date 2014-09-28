@@ -19,7 +19,7 @@ require_relative '../../app/models/book'
 # spec/fetcher/.
 
 Rails.logger = Rails.logger or Logger.new STDERR
-Rails.logger.debug "Setting up database: #{Rails.env.intern}" 
+# Rails.logger.debug "Setting up database: #{Rails.env.intern}" 
 config = Rails::Application::Configuration.new ""
 ActiveRecord::Base.configurations = config.database_configuration
 ActiveRecord::Base.establish_connection 
@@ -37,7 +37,7 @@ def update_last_renewed(book, old_renew_count_map)
 end
 
 def synchronize_and_renew_card(fetcher, card)
-  Rails.logger.info "Synchronizing data for card: #{card.number}"
+  # Rails.logger.info "Synchronizing data for card: #{card.number}"
   fetcher.login card.number
   new_card_info = extract_card_info(fetcher.page)
 
@@ -82,7 +82,7 @@ def run
   fetcher = Fetcher.new
   for user in User.all
     for card in user.cards
-      synchronize_card_data fetcher, card
+      synchronize_and_renew_card fetcher, card
     end
   end
 end
