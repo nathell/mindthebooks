@@ -14,4 +14,16 @@ So here it is, my repo for all the world to see. Not that anyone would notice, b
  
 ## How to set it up
 
-Please refer to `README.rdoc`.
+MTB consists of two parts. The first one is a regular Rails application, and you run it just like any other Rails app. The following command should do the trick:
+
+    bundle install && bundle exec rake db:migrate && rails server
+
+The Web application itself, however, is rather CRUDe and doesn't know anything about interacting with the external Southwark libraries on-line system. That part is done asynchronically by a component called _updater_ (see `lib/fetcher/updater.rb`). You can run updater either from cron, or just in a loop from the command line:
+
+    while true; do ruby lib/fetcher/updater.rb; sleep 5; done
+
+I am using Ruby 2.1.1 (installed using rbenv 0.3.0) on Mint 16 to develop this app. Your mileage may vary.
+
+## Is it online yet?
+
+Not yet but it will be soon.
