@@ -1,0 +1,32 @@
+Hello <%= @user.email %>!
+
+<% if @user.cards.present? %>
+
+Your library cards are listed below. You can also <%= link_to "add another card", controller: :cards, action: :new %>.
+
+<% for @card in @user.cards %>
+  <%= @card.number %>
+  <% if @card.card_info %>
+    <%= @card.card_info.cardholder %>
+    <% if @card.card_info.books.present? %>
+      <% for @book in @card.card_info.books %>
+        <%= @book.title %>
+        <%= @book.author %>
+        <%= @book.due_date %>
+        <%= @book.fine %>
+        <%= @book.renew_count %>
+        <%= @book.last_renewed %>
+      <% end %>
+    <% else %>
+      This card doesn't have any books.
+    <% end %>
+  <% else %>
+    not yet refreshed
+  <% end %>
+<% end %>
+
+<% else %>
+
+You haven't added any library card yet. You can <%= link_to "do so now", controller: :cards, action: :new %>.
+
+<% end %>
