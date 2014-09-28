@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20140917103523) do
     t.date     "due_date"
     t.string   "fine"
     t.integer  "renew_count"
-    t.date     "last_renewed"
+    t.datetime "last_renewed"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20140917103523) do
 
   create_table "users", force: true do |t|
     t.string   "email"
-    t.string   "password_hash"
+    t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

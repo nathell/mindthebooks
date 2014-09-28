@@ -26,6 +26,8 @@ gem 'factory_girl_rails', '4.4.1', group: :test
 gem 'fakeweb', '~> 1.3', group: :test
 # For travelling back in time
 gem 'delorean', '2.1.0'
+# We want secure passwords
+gem 'bcrypt', '~> 3.1.7'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks

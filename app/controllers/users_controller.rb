@@ -4,10 +4,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    user_data = params.require(:user).permit :email, :initial_card_number
+    user_data = params.require(:user).permit :email, :password, :password_confirmation, :initial_card_number
     initial_card = user_data.delete :initial_card_number
     @user = User.new user_data
-    if initial_card
+    unless initial_card.blank?
       @user.cards.build(number: initial_card)
     end
     if @user.save
@@ -15,5 +15,9 @@ class UsersController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def show
+    @user = User.find params["id"]
   end
 end
