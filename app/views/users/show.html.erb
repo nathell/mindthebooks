@@ -5,23 +5,35 @@ Hello <%= @user.email %>!
 Your library cards are listed below. You can also <%= link_to "add another card", controller: :cards, action: :new %>.
 
 <% for @card in @user.cards %>
-  <%= @card.number %>
   <% if @card.card_info %>
-    <%= @card.card_info.cardholder %>
+    <h2>Card: <%= @card.number %></h2>
+    <h3>Registered to: <%= @card.card_info.cardholder %></h3>
     <% if @card.card_info.books.present? %>
+      <table class="card-data">
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Due date</th>
+          <th>Fine</th>
+          <th>Renew count</th>
+          <th>Last renewed</th>
+        </tr>
       <% for @book in @card.card_info.books %>
-        <%= @book.title %>
-        <%= @book.author %>
-        <%= @book.due_date %>
-        <%= @book.fine %>
-        <%= @book.renew_count %>
-        <%= @book.last_renewed %>
+        <tr>
+          <td><%= @book.title %></td>
+          <td><%= @book.author %></td>
+          <td><%= @book.due_date %></td>
+          <td><%= @book.fine %></td>
+          <td><%= @book.renew_count %></td>
+          <td><%= @book.last_renewed %></td>
+        </tr>
       <% end %>
+      </table>
     <% else %>
       This card doesn't have any books.
     <% end %>
   <% else %>
-    not yet refreshed
+    <h2>Card: <%= @card.number %> (not refreshed yet)</h2>
   <% end %>
 <% end %>
 

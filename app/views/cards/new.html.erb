@@ -1,8 +1,8 @@
 <h1>Add new card</h1>
-<p>Enter your library card data:</p>
 <%= form_for @card do |f| %>
-  <%= f.label :number %>
+<fieldset>
+  <%= f.label :number, "Library card number" %>
   <%= f.text_field :number %>
-
+</fieldset>
   <%= f.submit "Add card" %>
 <% end %>

@@ -1,4 +1,6 @@
 class CardsController < ApplicationController
+  before_filter :ensure_logged_in
+
   def new
     @card = Card.new
   end

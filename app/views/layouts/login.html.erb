@@ -8,19 +8,16 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <header>
-    <nav>
-      <div class="sitename">Mind the Books</div>
-      <div class="login">
-        <% if logged_in? %>
-        <%= current_user.email %> | <%= link_to 'Logout', logout_path, method: 'delete' %>
-        <% else %>
-        Login
-        <% end %>
-      </div>
-    </nav>
-  </header>
+  <nav class="login">
+    <h1>Mind the Books</h1>
+    <h2 class="subtitle">for members of public libraries in <strong>London Borough of Southwark</strong>
+    </h2>
+  </nav>
   <div class="main">
+    <p class="intro">
+      Welcome to <b>Mind the Books!</b> Mind the Books remembers your Southwark library card and renews your
+      borrowed books automatically when they're nearing their due date, so that you don't have to.
+    </p>
     <%= yield %>
   </div>
   <footer>

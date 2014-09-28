@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_filter :ensure_correct_user, only: [:show]
+
   def new
     @user = User.new
   end

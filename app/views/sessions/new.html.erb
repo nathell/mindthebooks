@@ -1,11 +1,23 @@
-<h1>Log in</h1>
+<div class="column login">
+
+<h2>Already using Mind the Books?</h1>
 
 <%= form_for(:sessions, url: sessions_path) do |f| %>
+<fieldset>
   <%= f.label :email %>
   <%= f.text_field :email %>
 
   <%= f.label :password %>
   <%= f.password_field :password %>
-
-  <%= f.submit "Log in" %>
+</fieldset>
+  <%= f.submit "Login" %>
 <% end %>
+
+</div>
+
+<div class="column signup">
+<h2>New to Mind the Books?</h1>
+<%= link_to "Sign up", controller: :users, action: :new %>
+</div>
+
+</div>

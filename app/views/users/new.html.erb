@@ -1,5 +1,3 @@
-<h1>Sign up</h1>
-
 <% if @user.errors.any? %>
 <div id="error explanation">
 <ul>
@@ -10,7 +8,10 @@
 </div>
 <% end %>
 
+<h1>Sign up</h1>
+
 <%= form_for @user do |f| %>
+<fieldset>
   <%= f.label :email %>
   <%= f.text_field :email %>
 
@@ -22,6 +23,6 @@
 
   <%= f.label :initial_card_number %>
   <%= f.text_field :initial_card_number %>
-
+</fieldset>
   <%= f.submit "Sign me up!" %>
 <% end %>
